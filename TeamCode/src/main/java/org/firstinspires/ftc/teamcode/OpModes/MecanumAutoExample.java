@@ -7,8 +7,8 @@ import org.firstinspires.ftc.teamcode.MecanumBase;
 /**
  * Run an autonomous pattern.
  */
-@Autonomous(name = "MecanumAuto", group = "")
-public class MecanumAuto extends MecanumBase {
+@Autonomous(name = "MecanumAutoExample", group = "")
+public class MecanumAutoExample extends MecanumBase {
 
     /**
      * This function is executed when this Op Mode is selected from the Driver
