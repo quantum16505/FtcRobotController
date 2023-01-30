@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 /**
@@ -77,19 +76,7 @@ public abstract class MecanumBase extends LinearOpMode {
      * in gyroscopes.
      */
     protected void initialize_post_start() {
-        BNO055IMU.Parameters imu_params = new BNO055IMU.Parameters(
-                new RevHubOrientationOnRobot(
-                    new Orientation(
-                        AxesReference.INTRINSIC,
-                        AxesOrder.ZYX,
-                        AngleUnit.DEGREES,
-                        0,
-                        90,
-                        0,
-                        0  // acquisitionTime, not used
-                )
-        )
-        );
+        BNO055IMU.Parameters imu_params = new BNO055IMU.Parameters();
         imu_params.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         imu_params.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         imu_params.calibrationDataFile = "BNO055IMUCalibration.json";
@@ -101,6 +88,7 @@ public abstract class MecanumBase extends LinearOpMode {
         Orientation angles = imu.getAngularOrientation();
         heading_raw_last = angles.firstAngle;
         heading = -heading_raw_last;
+
     }
 
     // ===========================================================================
