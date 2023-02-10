@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.Hardware.HardwareProfile;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -20,7 +21,11 @@ import org.firstinspires.ftc.teamcode.MecanumBase;
  */
 @Autonomous(name = "DetectAndParkAuto", group = "")
 public class DetectAndParkAuto extends MecanumBase {
-// Begin the section from the AprilTag example
+
+    // Added this for the claw servos
+    HardwareProfile robot = new HardwareProfile();   // Use a Pushbots hardware
+
+    // Begin the section from the AprilTag example
 
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
@@ -127,6 +132,12 @@ public class DetectAndParkAuto extends MecanumBase {
 
         waitForStart();
         initialize_post_start();
+
+        // It grips the cone in autonomous
+
+        double startPos = 1;
+        robot.IntakeLeft.setPosition(startPos);
+        robot.IntakeRight.setPosition(startPos);
 
         // Begin section from AprilTag example
         /*

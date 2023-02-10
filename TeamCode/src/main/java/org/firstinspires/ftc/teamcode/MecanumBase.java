@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 /**
@@ -22,6 +24,10 @@ public abstract class MecanumBase extends LinearOpMode {
     private DcMotor FrontLeftDrive;
     private DcMotor RearLeftDrive;
     private BNO055IMU imu;
+
+    // the claw servos
+    private Servo IntakeLeft;
+    private Servo IntakeRight;
 
     // the conditioned gamepad stick positions
     protected double left_x;
@@ -71,7 +77,7 @@ public abstract class MecanumBase extends LinearOpMode {
     /**
      * Call this in your OpMode after the waitForStart() method and before
      * you have your robot start to do something. This initializes things
-     * whose initialization needs to happen colse in time to the start of
+     * whose initialization needs to happen close to the start time of
      * robot activity. IMU gyros are an example of this due to procession
      * in gyroscopes.
      */
