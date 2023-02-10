@@ -23,7 +23,7 @@ import org.firstinspires.ftc.teamcode.MecanumBase;
 public class DetectAndParkAuto extends MecanumBase {
 
     // Added this for the claw servos
-    HardwareProfile robot = new HardwareProfile();   // Use a Pushbots hardware
+    HardwareProfile robot = new HardwareProfile();
 
     // Begin the section from the AprilTag example
 
@@ -51,6 +51,9 @@ public class DetectAndParkAuto extends MecanumBase {
     AprilTagDetection tagOfInterest = null;
 
   // End the section from the AprilTag Example
+
+  // Start position for the servo
+    double startPos = 1;
 
     /**
      * This function is executed when this Op Mode is selected from the Driver
@@ -128,16 +131,18 @@ public class DetectAndParkAuto extends MecanumBase {
         // End section from AprilTag example
 
         // initialize the mecanum base
+
         initialize_pre_start(hardwareMap);
+
+        // It grips the cone in autonomous
+
+        robot.IntakeLeft.setPosition(startPos);
+        robot.IntakeRight.setPosition(startPos);
 
         waitForStart();
         initialize_post_start();
 
-        // It grips the cone in autonomous
 
-        double startPos = 1;
-        robot.IntakeLeft.setPosition(startPos);
-        robot.IntakeRight.setPosition(startPos);
 
         // Begin section from AprilTag example
         /*
