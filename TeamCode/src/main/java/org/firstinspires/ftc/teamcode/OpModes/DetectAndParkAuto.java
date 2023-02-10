@@ -22,8 +22,7 @@ import org.firstinspires.ftc.teamcode.MecanumBase;
 @Autonomous(name = "DetectAndParkAuto", group = "")
 public class DetectAndParkAuto extends MecanumBase {
 
-    // Added this for the claw servos
-    HardwareProfile robot = new HardwareProfile();
+
 
     // Begin the section from the AprilTag example
 
@@ -51,9 +50,6 @@ public class DetectAndParkAuto extends MecanumBase {
     AprilTagDetection tagOfInterest = null;
 
   // End the section from the AprilTag Example
-
-  // Start position for the servo
-    double startPos = 1;
 
     /**
      * This function is executed when this Op Mode is selected from the Driver
@@ -134,10 +130,6 @@ public class DetectAndParkAuto extends MecanumBase {
 
         initialize_pre_start(hardwareMap);
 
-        // It grips the cone in autonomous
-
-        robot.IntakeLeft.setPosition(startPos);
-        robot.IntakeRight.setPosition(startPos);
 
         waitForStart();
         initialize_post_start();
@@ -163,18 +155,24 @@ public class DetectAndParkAuto extends MecanumBase {
         /* Actually do something useful */
         if(tagOfInterest == null || tagOfInterest.id == left) {
             // left telemetry goes here
-            move(42.0, 0.0);
-            move(50.0, -90.0);
+            move(48.0, 0.0);
+            move(55.0, -90.0);
+            move(5.0, 90.0);
+
         }else if(tagOfInterest.id == middle){
             // middle telemetry goes here
-            move(50.0, -90.0);
+            move(55.0, -90.0);
+            move(5.0, 90.0);
         }else if(tagOfInterest.id == right){
             // right  telemetry goes here
-            move(-46.0, 0.0);
-            move(50.0, -90.0);
+            move(-48.0, 0.0);
+            move(55.0, -90.0);
+            move(5.0, 90.0);
         }
-
-
+        double liftPower = .5;
+        Carousel.setTargetPosition(0);
+        Carousel.setPower(liftPower);
+        sleep(1000);
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
         //while (opModeIsActive()) {
         //    sleep(20);
@@ -190,6 +188,7 @@ public class DetectAndParkAuto extends MecanumBase {
         telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
         telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
     }
+
 
 
 }
