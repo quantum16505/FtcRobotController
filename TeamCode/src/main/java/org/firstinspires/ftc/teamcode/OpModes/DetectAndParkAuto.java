@@ -148,14 +148,14 @@ public class DetectAndParkAuto extends MecanumBase {
         if(tagOfInterest == null || tagOfInterest.id == left) {
             // left telemetry goes here
             move(42.0, 0.0);
-            move(42.0, -90.0);
+            move(50.0, -90.0);
         }else if(tagOfInterest.id == middle){
             // middle telemetry goes here
-            move(42.0, -90.0);
+            move(50.0, -90.0);
         }else if(tagOfInterest.id == right){
             // right  telemetry goes here
             move(-46.0, 0.0);
-            move(46.0, -90.0);
+            move(50.0, -90.0);
         }
 
 
