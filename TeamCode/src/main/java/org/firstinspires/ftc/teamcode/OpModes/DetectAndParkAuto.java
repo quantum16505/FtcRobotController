@@ -155,19 +155,19 @@ public class DetectAndParkAuto extends MecanumBase {
         /* Actually do something useful */
         if(tagOfInterest == null || tagOfInterest.id == left) {
             // left telemetry goes here
-            move(48.0, 0.0);
-            move(65.0, -90.0);
-            move(5.0, 90.0);
+            move(18.0, 0.0);
+            move(22.0, -90.0);
+            move(2.0, 90.0);
 
         }else if(tagOfInterest.id == middle){
             // middle telemetry goes here
-            move(65.0, -90.0);
-            move(5.0, 90.0);
+            move(22.0, -90.0);
+            move(2.0, 90.0);
         }else if(tagOfInterest.id == right){
             // right  telemetry goes here
-            move(-52.0, 0.0);
-            move(65.0, -90.0);
-            move(5.0, 90.0);
+            move(-18.0, 0.0);
+            move(22.0, -90.0);
+            move(2.0, 90.0);
         }
         double liftPower = .5;
         Carousel.setTargetPosition(0);
