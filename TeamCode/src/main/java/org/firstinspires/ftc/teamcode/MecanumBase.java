@@ -52,8 +52,8 @@ public abstract class MecanumBase extends LinearOpMode {
     double mtr_decel_tics = 1200.0;
     double mtr_accel_degs = 10.0;
     double mtr_decel_degs = 60.0;
-    double tics_per_inch_forward = 14.27;
-    double tics_per_inch_sideways = 14.27;
+    double tics_per_inch_forward = 28.54;
+    double tics_per_inch_sideways = 28.54;
 
     // tracking the heading of the robot
     double heading;
