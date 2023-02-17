@@ -6,7 +6,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.teamcode.Hardware.HardwareProfile;
 
 /**
  * This is a base class for a specific physical implementation of The
@@ -16,12 +19,22 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
  * inches of robot movement.
  */
 public abstract class MecanumBase extends LinearOpMode {
+    // Added this for the claw servos
+    HardwareProfile robot = new HardwareProfile();
+
 
     private DcMotor FrontRightDrive;
     private DcMotor RearRightDrive;
     private DcMotor FrontLeftDrive;
     private DcMotor RearLeftDrive;
     private BNO055IMU imu;
+
+    // the claw servos
+    private Servo IntakeLeft;
+    private Servo IntakeRight;
+
+    // the linear slide motor
+    public DcMotor Carousel;
 
     // the conditioned gamepad stick positions
     protected double left_x;
@@ -47,12 +60,14 @@ public abstract class MecanumBase extends LinearOpMode {
     int heading_revs = 0;
     double heading_raw_last;
 
+    double closePos = 1;
+
     /**
      * Call this in your OpMode before the waitForStart() method to
      * initialize the mecanum traction.
      * @param hardware_map The hardware map for the configuration of your robot.
      */
-    protected void initialize_pre_start(HardwareMap hardware_map) {
+    protected void initialize_pre_start(HardwareMap hwMap) {
         FrontRightDrive = hardwareMap.dcMotor.get("frontrightdrive");
         RearRightDrive = hardwareMap.dcMotor.get("rearrightdrive");
         FrontLeftDrive = hardwareMap.dcMotor.get("frontleftdrive");
@@ -66,12 +81,31 @@ public abstract class MecanumBase extends LinearOpMode {
         initialize_motor(FrontLeftDrive, DcMotorSimple.Direction.FORWARD, at_zero);
         initialize_motor(RearLeftDrive, DcMotorSimple.Direction.REVERSE, at_zero);
         reset_drive_encoders();
+        // It grips the cone in autonomous
+        IntakeLeft = hwMap.get(Servo.class, "intakeleft");
+        IntakeLeft.setDirection(Servo.Direction.FORWARD);
+        IntakeRight = hwMap.get(Servo.class, "intakeright");
+        IntakeRight.setDirection(Servo.Direction.REVERSE);
+        IntakeLeft.setPosition(closePos);
+        IntakeRight.setPosition(closePos);
+        Carousel = hwMap.get(DcMotor.class, "Carousel");
+        // Carousel.setDirection(DcMotor.Direction.REVERSE);
+        Carousel.setTargetPosition(0);
+        Carousel.setPower(0);
+        Carousel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        // Carousel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        // Carousel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Carousel.setPower(0);
+        double liftPower = .5;
+        Carousel.setTargetPosition(-100);
+        Carousel.setPower(liftPower);
+
     }
 
     /**
      * Call this in your OpMode after the waitForStart() method and before
      * you have your robot start to do something. This initializes things
-     * whose initialization needs to happen colse in time to the start of
+     * whose initialization needs to happen close to the start time of
      * robot activity. IMU gyros are an example of this due to procession
      * in gyroscopes.
      */
@@ -369,4 +403,5 @@ public abstract class MecanumBase extends LinearOpMode {
         }
         set_speeds(0.0, 0.0, 0.0);
     }
+
 }

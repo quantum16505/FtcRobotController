@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.Hardware.HardwareProfile;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -20,7 +21,10 @@ import org.firstinspires.ftc.teamcode.MecanumBase;
  */
 @Autonomous(name = "DetectAndParkAuto", group = "")
 public class DetectAndParkAuto extends MecanumBase {
-// Begin the section from the AprilTag example
+
+
+
+    // Begin the section from the AprilTag example
 
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
@@ -123,10 +127,14 @@ public class DetectAndParkAuto extends MecanumBase {
         // End section from AprilTag example
 
         // initialize the mecanum base
+
         initialize_pre_start(hardwareMap);
+
 
         waitForStart();
         initialize_post_start();
+
+
 
         // Begin section from AprilTag example
         /*
@@ -147,18 +155,24 @@ public class DetectAndParkAuto extends MecanumBase {
         /* Actually do something useful */
         if(tagOfInterest == null || tagOfInterest.id == left) {
             // left telemetry goes here
-            move(42.0, 0.0);
-            move(50.0, -90.0);
+            move(48.0, 0.0);
+            move(65.0, -90.0);
+            move(5.0, 90.0);
+
         }else if(tagOfInterest.id == middle){
             // middle telemetry goes here
-            move(50.0, -90.0);
+            move(65.0, -90.0);
+            move(5.0, 90.0);
         }else if(tagOfInterest.id == right){
             // right  telemetry goes here
-            move(-46.0, 0.0);
-            move(50.0, -90.0);
+            move(-52.0, 0.0);
+            move(65.0, -90.0);
+            move(5.0, 90.0);
         }
-
-
+        double liftPower = .5;
+        Carousel.setTargetPosition(0);
+        Carousel.setPower(liftPower);
+        sleep(1000);
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
         //while (opModeIsActive()) {
         //    sleep(20);
@@ -174,6 +188,7 @@ public class DetectAndParkAuto extends MecanumBase {
         telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
         telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
     }
+
 
 
 }
