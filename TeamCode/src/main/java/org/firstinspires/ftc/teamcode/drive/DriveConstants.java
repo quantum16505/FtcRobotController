@@ -34,7 +34,7 @@ public class DriveConstants {
      * If using the built-in motor velocity PID, update MOTOR_VELO_PID with the tuned coefficients
      * from DriveVelocityPIDTuner.
      */
-    public static final boolean RUN_USING_ENCODER = false;
+    public static final boolean RUN_USING_ENCODER = true;
     public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(0, 0, 0,
             getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV));
 
@@ -48,7 +48,7 @@ public class DriveConstants {
      */
     public static double WHEEL_RADIUS = 1.8898; // in
     // This should be 0.5 based on the kit info, but it was updated after running StraightTest
-    public static double GEAR_RATIO = 0.65; // output (wheel) speed / input (motor) speed
+    public static double GEAR_RATIO = 0.5; // output (wheel) speed / input (motor) speed
     public static double TRACK_WIDTH = 11.5; // in
 
     /*
@@ -101,8 +101,8 @@ public class DriveConstants {
      * https://github.com/acmerobotics/road-runner-quickstart/issues/91
 
      */
-    public static double MAX_VEL = 36.58665032249647;
-    public static double MAX_ACCEL = 36.58665032249647;
+    public static double MAX_VEL = 25.8; // used to be 36.58665032249647;
+    public static double MAX_ACCEL = 25.8; // used to be 36.58665032249647;
     public static double MAX_ANG_VEL = Math.toRadians(140.80002213195476);
     public static double MAX_ANG_ACCEL = Math.toRadians(182.28353478260868);
 
