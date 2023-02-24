@@ -41,7 +41,7 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
         while (!isStopRequested()) {
             TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
                     .forward(DISTANCE)
-                    .turn(Math.toRadians(90))
+                    .turn(Math.toRadians(-90))
                     .build();
             drive.followTrajectorySequence(trajSeq);
 
