@@ -221,7 +221,7 @@ public class RightOysterSequence extends LinearOpMode {
                 // Right telemetry goes here
                 TrajectorySequence trajRight = drive.trajectorySequenceBuilder(trajSeq.end())
                         .turn(Math.toRadians(90))
-                        .forward(36)
+                        .forward(34)
                         .build();
                 drive.followTrajectorySequence(trajRight);
 
