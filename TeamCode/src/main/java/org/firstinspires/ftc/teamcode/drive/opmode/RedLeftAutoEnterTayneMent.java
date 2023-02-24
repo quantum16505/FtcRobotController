@@ -185,7 +185,7 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
 
                     // Strafe left
                     .strafeLeft(17)
-                    .forward(51)
+                    .forward(50)
                     // Close claw
                     .addDisplacementMarker(() -> {
                         // grab cone lift to mid junction
@@ -199,7 +199,7 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
 
                     .back(23)
                     .turn(Math.toRadians(90))
-                    .strafeLeft(23)
+                    .strafeLeft(24)
                     .forward(5.5)
                     // open claw
                     .addDisplacementMarker(() -> {
