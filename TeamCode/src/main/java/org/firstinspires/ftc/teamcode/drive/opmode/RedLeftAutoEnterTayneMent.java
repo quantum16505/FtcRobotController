@@ -193,22 +193,22 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
             drive.followTrajectorySequence(trajSeq);
             if(tagOfInterest == null || tagOfInterest.id == left) {
                 // left telemetry goes here
-                Trajectory trajLeft = drive.trajectoryBuilder(startPose)
-                        .strafeLeft(50)
+                Trajectory trajLeft = drive.trajectoryBuilder(trajSeq.end())
+                        .strafeRight(20)
                         .build();
                 drive.followTrajectory(trajLeft);
 
             }else if(tagOfInterest.id == middle){
                 // middle telemetry goes here
-                Trajectory trajMiddle = drive.trajectoryBuilder(startPose)
-                        .strafeLeft(50)
+                Trajectory trajMiddle = drive.trajectoryBuilder(trajSeq.end())
+                        .strafeLeft(20)
                         .build();
                 drive.followTrajectory(trajMiddle);
 
 
             }else if(tagOfInterest.id == right){
                 // right  telemetry goes here
-                Trajectory trajRight = drive.trajectoryBuilder(startPose)
+                Trajectory trajRight = drive.trajectoryBuilder(trajSeq.end())
                         .strafeLeft(50)
                         .build();
                 drive.followTrajectory(trajRight);
