@@ -67,6 +67,9 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
         // Added this for servos
         robot.init(hardwareMap);
+        double openPos = 0.86;
+        double startPos = 1;
+        double closePos = 1;
         // Begin section from AprilTag example
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
@@ -183,12 +186,34 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
                     .forward(5.5)
                     // open claw
                     .back(5)
-                    // park
-                    //
-
                     .build();
-            drive.followTrajectorySequence(trajSeq);
 
+            // park
+
+            drive.followTrajectorySequence(trajSeq);
+            if(tagOfInterest == null || tagOfInterest.id == left) {
+                // left telemetry goes here
+                Trajectory trajLeft = drive.trajectoryBuilder(startPose)
+                        .strafeLeft(50)
+                        .build();
+                drive.followTrajectory(trajLeft);
+
+            }else if(tagOfInterest.id == middle){
+                // middle telemetry goes here
+                Trajectory trajMiddle = drive.trajectoryBuilder(startPose)
+                        .strafeLeft(50)
+                        .build();
+                drive.followTrajectory(trajMiddle);
+
+
+            }else if(tagOfInterest.id == right){
+                // right  telemetry goes here
+                Trajectory trajRight = drive.trajectoryBuilder(startPose)
+                        .strafeLeft(50)
+                        .build();
+                drive.followTrajectory(trajRight);
+
+            }
             Pose2d poseEstimate = drive.getPoseEstimate();
             telemetry.addData("finalX", poseEstimate.getX());
             telemetry.addData("finalY", poseEstimate.getY());
