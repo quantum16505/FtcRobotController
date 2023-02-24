@@ -164,7 +164,7 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
                         robot.Carousel.setTargetPosition(-2925);
                         robot.Carousel.setPower(liftPower);
                     })
-                    .forward(66)
+                    .forward(67)
                     .turn(Math.toRadians(90))
                     // .strafeRight(14)
 
@@ -176,6 +176,7 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
                         // drop cone and lower to top of stack
                         robot.Carousel.setTargetPosition(-450);
                         robot.Carousel.setPower(liftPower);
+                        sleep(100);
                         robot.IntakeLeft.setPosition(openPos);
                         robot.IntakeRight.setPosition(openPos);
                     })
@@ -183,30 +184,32 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
                     .back(5)
 
                     // Strafe left
-                    .strafeLeft(16)
+                    .strafeLeft(17)
                     .forward(51)
                     // Close claw
                     .addDisplacementMarker(() -> {
                         // grab cone lift to mid junction
                         robot.IntakeLeft.setPosition(closePos);
                         robot.IntakeRight.setPosition(closePos);
-                        sleep(100);
+                        sleep(200);
                         robot.Carousel.setTargetPosition(-2150);
                         robot.Carousel.setPower(liftPower);
                         sleep(200);
                     })
-                    // lift to mid junction
+
                     .back(23)
                     .turn(Math.toRadians(90))
-                    .strafeLeft(21.5)
+                    .strafeLeft(23)
                     .forward(5.5)
                     // open claw
                     .addDisplacementMarker(() -> {
                         // drop cone
-                        robot.IntakeLeft.setPosition(openPos);
-                        robot.IntakeRight.setPosition(openPos);
                         robot.Carousel.setTargetPosition(0);
                         robot.Carousel.setPower(liftPower);
+                        sleep(200);
+                        robot.IntakeLeft.setPosition(openPos);
+                        robot.IntakeRight.setPosition(openPos);
+
                     })
                     .back(5)
                     .build();
