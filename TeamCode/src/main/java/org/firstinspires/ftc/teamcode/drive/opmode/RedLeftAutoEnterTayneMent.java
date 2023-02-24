@@ -164,7 +164,7 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
                         robot.Carousel.setTargetPosition(-2925);
                         robot.Carousel.setPower(liftPower);
                     })
-                    .forward(65)
+                    .forward(66)
                     .turn(Math.toRadians(90))
                     // .strafeRight(14)
 
@@ -183,20 +183,22 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
                     .back(5)
 
                     // Strafe left
-                    .strafeLeft(15)
+                    .strafeLeft(16)
                     .forward(51)
                     // Close claw
                     .addDisplacementMarker(() -> {
-                        // grab cone
+                        // grab cone lift to mid junction
                         robot.IntakeLeft.setPosition(closePos);
                         robot.IntakeRight.setPosition(closePos);
+                        sleep(100);
                         robot.Carousel.setTargetPosition(-2150);
                         robot.Carousel.setPower(liftPower);
+                        sleep(200);
                     })
                     // lift to mid junction
                     .back(23)
                     .turn(Math.toRadians(90))
-                    .strafeLeft(20)
+                    .strafeLeft(21.5)
                     .forward(5.5)
                     // open claw
                     .addDisplacementMarker(() -> {
