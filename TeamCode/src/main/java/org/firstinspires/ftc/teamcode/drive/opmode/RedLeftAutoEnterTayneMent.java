@@ -239,7 +239,7 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
                 // right  telemetry goes here
                 TrajectorySequence trajRight = drive.trajectorySequenceBuilder(trajSeq.end())
                         .turn(Math.toRadians(-90))
-                        .back(16)
+                        .back(13.5)
                         .build();
                 drive.followTrajectorySequence(trajRight);
                 robot.Carousel.setPower(0);
