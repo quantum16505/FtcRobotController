@@ -82,6 +82,7 @@ public class SampleMecanumDrive extends MecanumDrive {
     private List<Integer> lastEncVels = new ArrayList<>();
     public Servo IntakeLeft;
     public Servo IntakeRight;
+    public DcMotor Lift;
 
     public SampleMecanumDrive(HardwareMap hardwareMap) {
         super(kV, kA, kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
@@ -142,7 +143,7 @@ public class SampleMecanumDrive extends MecanumDrive {
                 follower, HEADING_PID, batteryVoltageSensor,
                 lastEncPositions, lastEncVels, lastTrackingEncPositions, lastTrackingEncVels
         );
-        // define servo
+        // init servos
         double startPos = 1;
         IntakeLeft = hardwareMap.servo.get("intakeleft");
         IntakeLeft.setDirection(Servo.Direction.FORWARD);
@@ -150,6 +151,19 @@ public class SampleMecanumDrive extends MecanumDrive {
         IntakeRight.setDirection(Servo.Direction.REVERSE);
         IntakeLeft.setPosition(startPos);
         IntakeRight.setPosition(startPos);
+
+        // init lift
+        Lift = hardwareMap.get(DcMotor.class, "Carousel");
+        // Carousel.setDirection(DcMotor.Direction.REVERSE);
+        Lift.setTargetPosition(0);
+        Lift.setPower(0);
+        Lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        // Carousel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        // Carousel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Lift.setPower(0);
+        double liftPower = .5;
+        Lift.setTargetPosition(-100);
+        Lift.setPower(liftPower);
 
     }
 

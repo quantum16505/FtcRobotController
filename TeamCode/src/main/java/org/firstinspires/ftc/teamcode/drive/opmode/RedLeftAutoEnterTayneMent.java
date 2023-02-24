@@ -156,15 +156,14 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
         // drive.followTrajectory(trajectory);
         while (!isStopRequested()) {
             TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
-                    .forward(4)
-                    .strafeRight(33)
-                    .forward(51)
+                    .strafeRight(35)
+                    .forward(65)
                     .turn(Math.toRadians(90))
-                    .strafeRight(14)
+                    // .strafeRight(14)
                     .addDisplacementMarker(() -> {
                         // Close the claw and lift da cone
-                        robot.IntakeLeft.setPosition(0.86);
-                        robot.IntakeRight.setPosition(0.08);
+                        robot.IntakeLeft.setPosition(openPos);
+                        robot.IntakeRight.setPosition(openPos);
                     })
                     // Raise lift to high here
                     // Drive forward 6 inches
@@ -193,25 +192,28 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
             drive.followTrajectorySequence(trajSeq);
             if(tagOfInterest == null || tagOfInterest.id == left) {
                 // left telemetry goes here
-                Trajectory trajLeft = drive.trajectoryBuilder(trajSeq.end())
-                        .strafeRight(20)
+                TrajectorySequence trajLeft = drive.trajectorySequenceBuilder(trajSeq.end())
+                        .turn(Math.toRadians(-90))
+                        .forward(32)
                         .build();
-                drive.followTrajectory(trajLeft);
+                drive.followTrajectorySequence(trajLeft);
 
             }else if(tagOfInterest.id == middle){
                 // middle telemetry goes here
-                Trajectory trajMiddle = drive.trajectoryBuilder(trajSeq.end())
-                        .strafeLeft(20)
+                TrajectorySequence trajMiddle = drive.trajectorySequenceBuilder(trajSeq.end())
+                        .turn(Math.toRadians(-90))
+                        .forward(10)
                         .build();
-                drive.followTrajectory(trajMiddle);
+                drive.followTrajectorySequence(trajMiddle);
 
 
             }else if(tagOfInterest.id == right){
                 // right  telemetry goes here
-                Trajectory trajRight = drive.trajectoryBuilder(trajSeq.end())
-                        .strafeLeft(50)
+                TrajectorySequence trajRight = drive.trajectorySequenceBuilder(trajSeq.end())
+                        .turn(Math.toRadians(-90))
+                        .back(16)
                         .build();
-                drive.followTrajectory(trajRight);
+                drive.followTrajectorySequence(trajRight);
 
             }
             Pose2d poseEstimate = drive.getPoseEstimate();
