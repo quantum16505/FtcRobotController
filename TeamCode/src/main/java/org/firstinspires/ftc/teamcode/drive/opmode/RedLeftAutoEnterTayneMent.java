@@ -209,6 +209,8 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
                         sleep(200);
                         robot.IntakeLeft.setPosition(openPos);
                         robot.IntakeRight.setPosition(openPos);
+                        robot.Carousel.setTargetPosition(0);
+                        robot.Carousel.setPower(liftPower);
 
                     })
                     .back(5)
@@ -221,10 +223,10 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
                 // left telemetry goes here
                 TrajectorySequence trajLeft = drive.trajectorySequenceBuilder(trajSeq.end())
                         .turn(Math.toRadians(-90))
-                        .forward(32)
+                        .forward(34)
                         .build();
                 drive.followTrajectorySequence(trajLeft);
-                robot.Carousel.setPower(0);
+
 
             }else if(tagOfInterest.id == middle){
                 // middle telemetry goes here
@@ -233,7 +235,7 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
                         .forward(10)
                         .build();
                 drive.followTrajectorySequence(trajMiddle);
-                robot.Carousel.setPower(0);
+
 
             }else if(tagOfInterest.id == right){
                 // right  telemetry goes here
@@ -242,7 +244,6 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
                         .back(12)
                         .build();
                 drive.followTrajectorySequence(trajRight);
-                robot.Carousel.setPower(0);
 
             }
             Pose2d poseEstimate = drive.getPoseEstimate();
