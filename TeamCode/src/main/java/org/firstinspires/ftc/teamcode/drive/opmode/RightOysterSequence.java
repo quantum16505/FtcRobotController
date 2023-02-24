@@ -155,7 +155,7 @@ public class RightOysterSequence extends LinearOpMode {
         // drive.followTrajectory(trajectory);
         while (!isStopRequested()) {
             TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
-                    .strafeLeft(35)
+                    .strafeLeft(33.2)
                     // Raise lift to high here
                     .addDisplacementMarker(() -> {
                         // lift da cone
