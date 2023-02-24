@@ -197,7 +197,7 @@ public class RightOysterSequence extends LinearOpMode {
 
                     .back(23)
                     .turn(Math.toRadians(-90))
-                    .strafeRight(25)
+                    .strafeRight(26)
                     .forward(4.5)
                     // open claw
                     .addDisplacementMarker(() -> {
