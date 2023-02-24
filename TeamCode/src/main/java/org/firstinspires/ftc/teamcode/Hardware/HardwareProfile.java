@@ -63,13 +63,13 @@ public class HardwareProfile {
         RearRightDrive.setDirection(DcMotor.Direction.REVERSE);
         RearRightDrive.setPower(0);
 
-        RearLeftDrive = hwMap.get(DcMotor.class, "leftRear");
-        RearLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        RearLeftDrive.setPower(0);
+        // RearLeftDrive = hwMap.get(DcMotor.class, "leftRear");
+        // RearLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+        // RearLeftDrive.setPower(0);
 
-        FrontLeftDrive = hwMap.get(DcMotor.class, "leftFront");
-        FrontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        FrontLeftDrive.setPower(0);
+        // FrontLeftDrive = hwMap.get(DcMotor.class, "leftFront");
+        // FrontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+        // FrontLeftDrive.setPower(0);
 
         FrontRightDrive = hwMap.get(DcMotor.class, "rightFront");
         FrontRightDrive.setDirection(DcMotor.Direction.REVERSE);
