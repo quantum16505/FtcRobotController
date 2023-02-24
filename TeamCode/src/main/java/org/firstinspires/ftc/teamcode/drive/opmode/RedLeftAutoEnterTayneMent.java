@@ -213,7 +213,7 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
                         robot.Carousel.setPower(liftPower);
 
                     })
-                    .back(5)
+                    .back(6)
                     .build();
 
             // park
@@ -223,7 +223,7 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
                 // left telemetry goes here
                 TrajectorySequence trajLeft = drive.trajectorySequenceBuilder(trajSeq.end())
                         .turn(Math.toRadians(-90))
-                        .forward(34)
+                        .forward(36)
                         .build();
                 drive.followTrajectorySequence(trajLeft);
 
