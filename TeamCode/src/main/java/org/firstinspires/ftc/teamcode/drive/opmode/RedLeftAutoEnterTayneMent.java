@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 /*
  * This is a simple routine to test translational drive capabilities.
@@ -25,23 +26,32 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        Trajectory trajectory = drive.trajectoryBuilder(new Pose2d())
-                .forward(DISTANCE)
-                .turn(Math.toRadians(90))
-                .build();
+        // Trajectory trajectory = drive.trajectoryBuilder(new Pose2d())
+        //        .forward(DISTANCE)
+        //        .turn(Math.toRadians(90))
+        //        .build();
+        Pose2d startPose = new Pose2d(-DISTANCE / 2, -DISTANCE / 2, 0);
 
+        drive.setPoseEstimate(startPose);
         waitForStart();
 
         if (isStopRequested()) return;
 
-        drive.followTrajectory(trajectory);
+        // drive.followTrajectory(trajectory);
+        while (!isStopRequested()) {
+            TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
+                    .forward(DISTANCE)
+                    .turn(Math.toRadians(90))
+                    .build();
+            drive.followTrajectorySequence(trajSeq);
 
-        Pose2d poseEstimate = drive.getPoseEstimate();
-        telemetry.addData("finalX", poseEstimate.getX());
-        telemetry.addData("finalY", poseEstimate.getY());
-        telemetry.addData("finalHeading", poseEstimate.getHeading());
-        telemetry.update();
+            Pose2d poseEstimate = drive.getPoseEstimate();
+            telemetry.addData("finalX", poseEstimate.getX());
+            telemetry.addData("finalY", poseEstimate.getY());
+            telemetry.addData("finalHeading", poseEstimate.getHeading());
+            telemetry.update();
 
-        while (!isStopRequested() && opModeIsActive()) ;
+            while (!isStopRequested() && opModeIsActive()) ;
+        }
     }
 }
