@@ -70,6 +70,7 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
         double openPos = 0.86;
         double startPos = 1;
         double closePos = 1;
+        double liftPower = .5;
         // Begin section from AprilTag example
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
@@ -157,33 +158,55 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
         while (!isStopRequested()) {
             TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
                     .strafeRight(35)
+                    // Raise lift to high here
+                    .addDisplacementMarker(() -> {
+                        // lift da cone
+                        robot.Carousel.setTargetPosition(-2925);
+                        robot.Carousel.setPower(liftPower);
+                    })
                     .forward(65)
                     .turn(Math.toRadians(90))
                     // .strafeRight(14)
-                    .addDisplacementMarker(() -> {
-                        // Close the claw and lift da cone
-                        robot.IntakeLeft.setPosition(openPos);
-                        robot.IntakeRight.setPosition(openPos);
-                    })
-                    // Raise lift to high here
+
+
                     // Drive forward 6 inches
                     .forward(4)
                     // Release claw
+                    .addDisplacementMarker(() -> {
+                        // drop cone and lower to top of stack
+                        robot.IntakeLeft.setPosition(openPos);
+                        robot.IntakeRight.setPosition(openPos);
+                        robot.Carousel.setTargetPosition(-450);
+                        robot.Carousel.setPower(liftPower);
+                    })
                     // Drive back 6 inches
                     .back(4)
-                    // Strafe right
+
+                    // Strafe left
                     .strafeLeft(15)
-                    // .turn(Math.toRadians(180))
-                    // set to stack height 5
-                    // Open claw
                     .forward(50)
                     // Close claw
+                    .addDisplacementMarker(() -> {
+                        // grab cone
+                        robot.IntakeLeft.setPosition(closePos);
+                        robot.IntakeRight.setPosition(closePos);
+                        robot.Carousel.setTargetPosition(-2150);
+                        robot.Carousel.setPower(liftPower);
+                    })
                     // lift to mid junction
                     .back(23)
                     .turn(Math.toRadians(90))
                     .strafeLeft(19.5)
                     .forward(5.5)
                     // open claw
+                    .addDisplacementMarker(() -> {
+                        // drop cone
+                        robot.IntakeLeft.setPosition(openPos);
+                        robot.IntakeRight.setPosition(openPos);
+                        robot.Carousel.setTargetPosition(0);
+                        robot.Carousel.setPower(liftPower);
+                        robot.Carousel.setPower(0);
+                    })
                     .back(5)
                     .build();
 
