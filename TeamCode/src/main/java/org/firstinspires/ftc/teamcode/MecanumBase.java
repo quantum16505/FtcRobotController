@@ -68,10 +68,10 @@ public abstract class MecanumBase extends LinearOpMode {
      * @param hardware_map The hardware map for the configuration of your robot.
      */
     protected void initialize_pre_start(HardwareMap hwMap) {
-        FrontRightDrive = hardwareMap.dcMotor.get("frontrightdrive");
-        RearRightDrive = hardwareMap.dcMotor.get("rearrightdrive");
-        FrontLeftDrive = hardwareMap.dcMotor.get("frontleftdrive");
-        RearLeftDrive = hardwareMap.dcMotor.get("rearleftdrive");
+        FrontRightDrive = hardwareMap.dcMotor.get("rightFront");
+        RearRightDrive = hardwareMap.dcMotor.get("rightRear");
+        FrontLeftDrive = hardwareMap.dcMotor.get("leftFront");
+        RearLeftDrive = hardwareMap.dcMotor.get("leftRear");
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         // You will have to determine which motors to reverse for your robot. All
         // motors should propell forward when positive power is applied.
