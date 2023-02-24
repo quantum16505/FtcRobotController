@@ -232,7 +232,7 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
                 // middle telemetry goes here
                 TrajectorySequence trajMiddle = drive.trajectorySequenceBuilder(trajSeq.end())
                         .turn(Math.toRadians(-90))
-                        .forward(10)
+                        .forward(12)
                         .build();
                 drive.followTrajectorySequence(trajMiddle);
 

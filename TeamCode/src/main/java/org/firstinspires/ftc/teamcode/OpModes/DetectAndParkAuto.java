@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -19,6 +20,7 @@ import org.firstinspires.ftc.teamcode.MecanumBase;
 /**
  * Run an autonomous pattern.
  */
+@Disabled
 @Autonomous(name = "DetectAndParkAuto", group = "")
 public class DetectAndParkAuto extends MecanumBase {
 

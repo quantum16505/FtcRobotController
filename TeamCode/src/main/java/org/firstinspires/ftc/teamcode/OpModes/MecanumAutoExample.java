@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.MecanumBase;
 
 /**
  * Run an autonomous pattern.
  */
+@Disabled
 @Autonomous(name = "MecanumAutoExample", group = "")
 public class MecanumAutoExample extends MecanumBase {
 
