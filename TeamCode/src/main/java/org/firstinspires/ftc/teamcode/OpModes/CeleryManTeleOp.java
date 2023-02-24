@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 //
-import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -9,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.Hardware.HardwareProfile;
 
 @TeleOp(name = "Mechanum_TeleOp", group = "")
-public class Mechanum_TeleOp extends LinearOpMode {
+public class CeleryManTeleOp extends LinearOpMode {
 
     HardwareProfile robot = new HardwareProfile();   // Use a Pushbots hardware
     double rx;
