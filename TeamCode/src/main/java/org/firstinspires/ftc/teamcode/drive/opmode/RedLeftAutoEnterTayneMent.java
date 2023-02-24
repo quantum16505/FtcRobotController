@@ -199,7 +199,7 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
 
                     .back(23)
                     .turn(Math.toRadians(90))
-                    .strafeLeft(26)
+                    .strafeLeft(25)
                     .forward(4.5)
                     // open claw
                     .addDisplacementMarker(() -> {
