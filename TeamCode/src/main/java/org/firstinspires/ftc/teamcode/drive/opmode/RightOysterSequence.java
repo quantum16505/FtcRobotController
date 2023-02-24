@@ -183,7 +183,7 @@ public class RightOysterSequence extends LinearOpMode {
 
                     // Strafe left
                     .strafeRight(19)
-                    .forward(50)
+                    .forward(50.5)
                     // Close claw
                     .addDisplacementMarker(() -> {
                         // grab cone lift to mid junction
@@ -211,7 +211,7 @@ public class RightOysterSequence extends LinearOpMode {
                         robot.Carousel.setPower(liftPower);
 
                     })
-                    .back(6)
+                    .back(5)
                     .build();
 
             // park
