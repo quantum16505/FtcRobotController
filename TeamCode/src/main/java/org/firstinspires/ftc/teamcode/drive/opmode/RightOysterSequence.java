@@ -162,7 +162,7 @@ public class RightOysterSequence extends LinearOpMode {
                         robot.Carousel.setTargetPosition(-2925);
                         robot.Carousel.setPower(liftPower);
                     })
-                    .forward(67)
+                    .forward(65)
                     .turn(Math.toRadians(-90))
                     // .strafeRight(14)
 
