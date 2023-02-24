@@ -25,6 +25,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
@@ -79,6 +80,8 @@ public class SampleMecanumDrive extends MecanumDrive {
 
     private List<Integer> lastEncPositions = new ArrayList<>();
     private List<Integer> lastEncVels = new ArrayList<>();
+    public Servo IntakeLeft;
+    public Servo IntakeRight;
 
     public SampleMecanumDrive(HardwareMap hardwareMap) {
         super(kV, kA, kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
@@ -139,6 +142,15 @@ public class SampleMecanumDrive extends MecanumDrive {
                 follower, HEADING_PID, batteryVoltageSensor,
                 lastEncPositions, lastEncVels, lastTrackingEncPositions, lastTrackingEncVels
         );
+        // define servo
+        double startPos = 1;
+        IntakeLeft = hardwareMap.servo.get("intakeleft");
+        IntakeLeft.setDirection(Servo.Direction.FORWARD);
+        IntakeRight = hardwareMap.servo.get("intakeright");
+        IntakeRight.setDirection(Servo.Direction.REVERSE);
+        IntakeLeft.setPosition(startPos);
+        IntakeRight.setPosition(startPos);
+
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose) {
@@ -313,4 +325,5 @@ public class SampleMecanumDrive extends MecanumDrive {
     public static TrajectoryAccelerationConstraint getAccelerationConstraint(double maxAccel) {
         return new ProfileAccelerationConstraint(maxAccel);
     }
+
 }

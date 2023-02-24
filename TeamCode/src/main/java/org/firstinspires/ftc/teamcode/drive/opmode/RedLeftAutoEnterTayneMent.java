@@ -7,10 +7,21 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.Servo;
+import org.firstinspires.ftc.teamcode.Hardware.HardwareProfile;
+
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.OpModes.AprilTagDetectionPipeline;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
+import org.openftc.apriltag.AprilTagDetection;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+
+import java.util.ArrayList;
 
 /*
  * This is a simple routine to test translational drive capabilities.
@@ -19,10 +30,112 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 @Autonomous(group = "drive")
 public class RedLeftAutoEnterTayneMent extends LinearOpMode {
     public static double DISTANCE = 65; // in
+    // Added this for the claw servos
+    HardwareProfile robot = new HardwareProfile();
+    // the claw servos
+    private Servo IntakeLeft;
+    private Servo IntakeRight;
+    // Begin the section from the AprilTag example
+
+    OpenCvCamera camera;
+    AprilTagDetectionPipeline aprilTagDetectionPipeline;
+
+    static final double FEET_PER_METER = 3.28084;
+
+    // Lens intrinsics
+    // UNITS ARE PIXELS
+    // NOTE: this calibration is for the C920 webcam at 800x448.
+    // You will need to do your own calibration for other configurations!
+    double fx = 578.272;
+    double fy = 578.272;
+    double cx = 402.145;
+    double cy = 221.506;
+
+    // UNITS ARE METERS
+    double tagsize = 0.166;
+
+    // Tag ID 18 from the 36h11 family
+    int left = 1;
+    int middle = 2;
+    int right = 3;
+    AprilTagDetection tagOfInterest = null;
+
+    // End the section from the AprilTag Example
 
     @Override
     public void runOpMode() throws InterruptedException {
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
+        // Added this for servos
+        robot.init(hardwareMap);
+        // Begin section from AprilTag example
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
+
+        camera.setPipeline(aprilTagDetectionPipeline);
+        camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+            @Override
+            public void onOpened() {
+                camera.startStreaming(800, 448, OpenCvCameraRotation.SIDEWAYS_LEFT);
+            }
+
+            @Override
+            public void onError(int errorCode) {
+
+            }
+        });
+
+        telemetry.setMsTransmissionInterval(50);
+
+        /*
+         * The INIT-loop:
+         * This REPLACES waitForStart!
+         */
+        while (!isStarted() && !isStopRequested()) {
+
+            ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
+
+            if (currentDetections.size() != 0) {
+                boolean tagFound = false;
+
+                for (AprilTagDetection tag : currentDetections) {
+                    if (tag.id == left || tag.id == middle || tag.id == right) {
+                        tagOfInterest = tag;
+                        tagFound = true;
+                        break;
+                    }
+                }
+
+                if (tagFound) {
+                    telemetry.addLine("Tag of interest is in sight!\n\nLocation data:");
+                    tagToTelemetry(tagOfInterest);
+                } else {
+                    telemetry.addLine("Don't see tag of interest :(");
+
+                    if (tagOfInterest == null) {
+                        telemetry.addLine("(The tag has never been seen)");
+                    } else {
+                        telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
+                        tagToTelemetry(tagOfInterest);
+                    }
+                }
+
+            } else {
+                telemetry.addLine("Don't see tag of interest :(");
+
+                if (tagOfInterest == null) {
+                    telemetry.addLine("(The tag has never been seen)");
+                } else {
+                    telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
+                    tagToTelemetry(tagOfInterest);
+                }
+
+            }
+
+            telemetry.update();
+            sleep(20);
+        }
+        // End section from AprilTag example
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
@@ -40,8 +153,39 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
         // drive.followTrajectory(trajectory);
         while (!isStopRequested()) {
             TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
-                    .forward(DISTANCE)
-                    .turn(Math.toRadians(-90))
+                    .forward(4)
+                    .strafeRight(33)
+                    .forward(51)
+                    .turn(Math.toRadians(90))
+                    .strafeRight(14)
+                    .addDisplacementMarker(() -> {
+                        // Close the claw and lift da cone
+                        robot.IntakeLeft.setPosition(0.86);
+                        robot.IntakeRight.setPosition(0.08);
+                    })
+                    // Raise lift to high here
+                    // Drive forward 6 inches
+                    .forward(4)
+                    // Release claw
+                    // Drive back 6 inches
+                    .back(4)
+                    // Strafe right
+                    .strafeLeft(15)
+                    // .turn(Math.toRadians(180))
+                    // set to stack height 5
+                    // Open claw
+                    .forward(50)
+                    // Close claw
+                    // lift to mid junction
+                    .back(23)
+                    .turn(Math.toRadians(90))
+                    .strafeLeft(19.5)
+                    .forward(5.5)
+                    // open claw
+                    .back(5)
+                    // park
+                    //
+
                     .build();
             drive.followTrajectorySequence(trajSeq);
 
@@ -53,5 +197,14 @@ public class RedLeftAutoEnterTayneMent extends LinearOpMode {
 
             while (!isStopRequested() && opModeIsActive()) ;
         }
+    }
+    void tagToTelemetry(AprilTagDetection detection) {
+        telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
+        telemetry.addLine(String.format("Translation X: %.2f feet", detection.pose.x * FEET_PER_METER));
+        telemetry.addLine(String.format("Translation Y: %.2f feet", detection.pose.y * FEET_PER_METER));
+        telemetry.addLine(String.format("Translation Z: %.2f feet", detection.pose.z * FEET_PER_METER));
+        telemetry.addLine(String.format("Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)));
+        telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
+        telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
     }
 }

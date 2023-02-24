@@ -34,6 +34,8 @@ public class HardwareProfile {
     public Servo IntakeLeft;
     public Servo IntakeRight;
 
+    public double startPos = 1;
+
     // Bot wheel and motor parameters
     private double COUNTS_PER_MOTOR_REV = 384.5;
     private double COUNTS_PER_CAROUSEL_REV = 384.5;
@@ -85,7 +87,7 @@ public class HardwareProfile {
         Carousel.setPower(0);
 
         // define servo
-
+        double startPos = 1;
         ArmServo = hwMap.get(Servo.class, "armservo");
         IntakeLeft = hwMap.get(Servo.class, "intakeleft");
         IntakeLeft.setDirection(Servo.Direction.FORWARD);
